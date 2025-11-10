@@ -12,7 +12,7 @@ const authenticationRoutes = require("./routes/authenticationRoutes");
 app.use(express.json());
 app.use(itemRoutes);
 app.use(userRoutes);
-app.use(authenticationRoutes);
+app.use("/api/auth/",authenticationRoutes);
 dbConnection();
 app.listen(process.env.port, () => {
     console.log(`Server running on http://localhost:${process.env.port}`);
