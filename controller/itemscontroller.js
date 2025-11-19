@@ -2,9 +2,18 @@ const itemModel = require("../model/items");
 
  //Get All API
 
- const getallItems = (req, res)=> {
-    res.status(200).json(itemModel);
- }
+ const getallItems = async (req, res)=> {
+    try{
+      const products = await itemModel.find();
+      if(products.length === 0)
+        {
+        return res.status (200).json({message:"Product Collection Empty"});
+      }
+      res.status(200).json({count:products.length, data:products}); 
+    }catch(err){
+      res.status(500).json({message:"server Error"});
+    }
+};
  
  //Get by Id
  const getItemsbyId = (req,res) =>{
@@ -16,7 +25,7 @@ const itemModel = require("../model/items");
     else{
       res.status(404).json({message:"item not found"});
     }
- }
+ };
 
  //post API
  const createItem =(req,res)=>
@@ -34,7 +43,7 @@ const itemModel = require("../model/items");
    }
    itemModel.push(newItems);
    res.status(201).json(newItems);
-}
+};
 // Update API
 const updateProduct = (req, res) => {
     const id = parseInt(req.params.id);
@@ -51,7 +60,7 @@ const updateProduct = (req, res) => {
     }else{
         res.status(404).json({message: "Product Not Found"});
     }
-}
+};
 const deleteProduct = (req, res) => {
     const id = parseInt(req.params.id);
     const product = itemModel.findIndex(existingProduct => existingProduct.id === id);
@@ -62,7 +71,7 @@ const deleteProduct = (req, res) => {
     } else {
          res.status(404).json({message: "Product Not Found"});
     }
-}
+};
 
    
  module.exports = {getallItems, getItemsbyId, createItem, updateProduct, deleteProduct};

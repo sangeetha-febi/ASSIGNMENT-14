@@ -9,7 +9,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 
  
 
-router.get("/",getallItems);
+router.get("/ ",getallItems);
 router.get("/:id",authMiddleware([]),getItemsbyId);
 router.post("/",authMiddleware(["admin"]),createItem);
 router.put("/:id",updateProduct);
